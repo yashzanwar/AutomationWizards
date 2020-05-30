@@ -11,15 +11,16 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.Reporter;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,28 +29,35 @@ import static io.appium.java_client.service.local.flags.GeneralServerFlag.LOG_LE
 
 public class DriverInitialiser {
 
-    public AndroidDriver getAndroidDriver(AppiumDriverLocalService appiumDriverLocalService, String DeviceName) {
+    private String newCommandTimeout;
+    private String automationName;
+    private String appPackage;
+    private String appActivity;
+
+    public void loadConfigProp() throws IOException {
+        FileReader reader = new FileReader("src/test/resources/capabilities.properties");
+        Properties p = new Properties();
+        p.load(reader);
+        newCommandTimeout = p.getProperty("newCommandTimeout");
+        automationName = p.getProperty("automationName");
+        appPackage = p.getProperty("appPackage");
+        appActivity = p.getProperty("appActivity");
+    }
+
+
+    public AndroidDriver<AndroidElement> getAndroidDriver(AppiumDriverLocalService appiumDriverLocalService, String DeviceName) throws MalformedURLException {
         String appiumServiceUrl = appiumDriverLocalService.getUrl().toString();
-        System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
-        System.out.println("Appium Service Device *************************: - " + DeviceName);
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability(MobileCapabilityType.UDID, DeviceName);
-        desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "30000");
+        desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, newCommandTimeout);
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DeviceName);
-        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
-        //desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, "false");
+        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, automationName);
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, String.valueOf(true));
-        desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.makemytrip");
-        desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"com.mmt.travel.app.home.ui.SplashActivity");
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appPackage);
+        desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
         //desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.mmt.travel.app.common.login.ui.LoginActivity");
         desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, "true");
-        AndroidDriver<AndroidElement> driver = null;
-        try {
-            driver = new AndroidDriver<>(new URL(appiumServiceUrl), desiredCapabilities);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        Reporter.log("Android Driver Created", true);
+        AndroidDriver driver = new AndroidDriver<>(new URL(appiumServiceUrl), desiredCapabilities);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         return driver;
     }
@@ -60,7 +68,6 @@ public class DriverInitialiser {
         AppiumDriverLocalService appiumService = AppiumDriverLocalService.buildService(appiumServiceBuilder);
         //AppiumDriverLocalService appiumService = AppiumDriverLocalService.buildDefaultService();
         appiumService.start();
-        Reporter.log("Appium Server Started", true);
         return appiumService;
 
     }
@@ -68,7 +75,7 @@ public class DriverInitialiser {
 
     public String getAttachedDevices() {
 
-        List DeviceList = new ArrayList<String>();
+        List<String> DeviceList = new ArrayList<String>();
         try {
             Process process = Runtime.getRuntime().exec("adb devices");
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));

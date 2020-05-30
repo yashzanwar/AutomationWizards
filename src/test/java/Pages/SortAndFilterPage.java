@@ -20,7 +20,22 @@ public class SortAndFilterPage extends BasePage {
         return new Locator(By.id("tv_apply"), "Apply Filter");
     }
 
+    private Locator priceSeekBar() {
+        return new Locator(By.id("price_seek_bar"), "Price Seek Bar");
+    }
+
     /***************************************************************** Methods *******************************************************************/
+
+    public void clickOnPriceFilter() {
+        waitUntilDisplayed(priceSeekBar(), 15);
+        int X = convertToWebElement(priceSeekBar()).getLocation().getX();
+        int Y = convertToWebElement(priceSeekBar()).getLocation().getY();
+        int ds = convertToWebElement(priceSeekBar()).getSize().getWidth();
+        int dsw = convertToWebElement(priceSeekBar()).getSize().getHeight();
+        clickOnSpecificPoint((int) (X + (ds * 0.08)), Y + dsw / 2);
+        System.out.println(X);
+        System.out.println(Y);
+    }
 
     public void clickOnFourAndAboveRating() {
         bringElementIntoViewDown(fourAndAboveRating(), 5);

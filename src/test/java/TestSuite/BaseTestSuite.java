@@ -9,6 +9,8 @@ import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.IOException;
+
 public class BaseTestSuite {
 
     private AppiumDriverLocalService appiumServices;
@@ -17,7 +19,8 @@ public class BaseTestSuite {
     private DriverInitialiser driverInitialiser = new DriverInitialiser();
 
     @BeforeMethod
-    protected void onTestStarted() {
+    protected void onTestStarted() throws IOException {
+        driverInitialiser.loadConfigProp();
         String device = driverInitialiser.getAttachedDevices();
         System.out.println("Device NAME **************** " + device);
         appiumServices = driverInitialiser.getAppiumDriverLocalService();
