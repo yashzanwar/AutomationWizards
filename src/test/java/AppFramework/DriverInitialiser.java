@@ -56,7 +56,7 @@ public class DriverInitialiser {
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appPackage);
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
         //desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.mmt.travel.app.common.login.ui.LoginActivity");
-        desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, "true");
+        //desiredCapabilities.setCapability(MobileCapabilityType.NO_RESET, "true");
         AndroidDriver driver = new AndroidDriver<>(new URL(appiumServiceUrl), desiredCapabilities);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         return driver;

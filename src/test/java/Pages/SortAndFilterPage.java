@@ -33,8 +33,7 @@ public class SortAndFilterPage extends BasePage {
         int ds = convertToWebElement(priceSeekBar()).getSize().getWidth();
         int dsw = convertToWebElement(priceSeekBar()).getSize().getHeight();
         clickOnSpecificPoint((int) (X + (ds * 0.08)), Y + dsw / 2);
-        System.out.println(X);
-        System.out.println(Y);
+        allureReportAndTestNgReport("Selected Greater Than Rs 1000 Filter");
     }
 
     public void clickOnFourAndAboveRating() {

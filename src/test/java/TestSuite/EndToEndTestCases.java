@@ -35,8 +35,8 @@ public class EndToEndTestCases extends BaseTestSuite {
     @Test(retryAnalyzer = RetryAnalyzer.class)
     public void Test_End_To_End_Flow() throws IOException {
         loadTestData();
-//        LoginPage loginPage = new LoginPage(driver);
-//        loginPage.doLogin(emailId, password);
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.doLogin(emailId, password);
         HomePage homePage = new HomePage(driver);
         homePage.clickOnRespectiveTab(hotelCategory);
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
@@ -55,6 +55,7 @@ public class EndToEndTestCases extends BaseTestSuite {
         String hotelName = hotelListingPage.clickOnFifthHotel();
         HotelDetailPage hotelDetailPage = new HotelDetailPage(driver);
         hotelDetailPage.clickOnSelectRoomButton();
+        hotelDetailPage.getRoomDetails();
         hotelDetailPage.clickOnContinueButton();
         BookingSummaryPage bookingSummaryPage = new BookingSummaryPage(driver);
         customSoftAssert.assertEquals(bookingSummaryPage.getHotelName(), hotelName);

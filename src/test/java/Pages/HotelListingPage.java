@@ -38,7 +38,10 @@ public class HotelListingPage extends BasePage {
                 hotels.add(getText(element));
                 if (hotels.size() == 5) {
                     hotelName = getText(element);
+                    int height = getHeightOfWindow();
+                    if (element.getLocation().getY() > (height * 0.75)) swipeDown();
                     click(element);
+                    allureReportAndTestNgReport("Clicked On Hotel");
                     break;
                 }
             }
