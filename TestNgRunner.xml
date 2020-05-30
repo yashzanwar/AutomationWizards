@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://beust.com/testng/testng-1.0.dtd" >
+<suite name="My Test Suite" parallel="tests" thread-count="10" verbose="12">
+    <listeners>
+        <listener class-name="AppFramework.TestListner"/>
+    </listeners>
+    <test name="Test Cases">
+        <classes>
+            <class name="TestSuite.EndToEndTestCases"/>
+        </classes>
+    </test>
+</suite>
