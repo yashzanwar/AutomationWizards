@@ -44,6 +44,7 @@ public class EndToEndTestCases extends BaseTestSuite {
         String checkIn = hotelSearchPage.clickOnCheckIn();
         String checkOut = hotelSearchPage.clickOnCheckOut();
         String totalGuestCount = hotelSearchPage.enterAdultsAndChildrenCountInEachRoom(NumberOfAdults, NumberOfChildren, NumberOfRooms);
+        hotelSearchPage.clickOnBusinessTypeTrip();
         hotelSearchPage.clickOnSearchButton();
         HotelListingPage hotelListingPage = new HotelListingPage(driver);
         hotelListingPage.clickOnSortAndFilterButton();

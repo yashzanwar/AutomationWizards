@@ -71,6 +71,18 @@ public class HotelSearchPage extends BasePage {
         return new Locator(By.id("search_button"), "Search Button");
     }
 
+    private Locator businessTypeTrip() {
+        return new Locator(By.id("rb_travel_type_business"), "Business Type Trip");
+    }
+
+    private Locator adultCount() {
+        return new Locator(By.id("tvadultcount"), "Adult Count");
+    }
+
+    private Locator childCount() {
+        return new Locator(By.id("tvchildcount"), "Child Count");
+    }
+
 
     /***************************************************************** Methods *******************************************************************/
 
@@ -99,9 +111,10 @@ public class HotelSearchPage extends BasePage {
     public String enterAdultsAndChildrenCountInEachRoom(int adults, int children, int rooms) {
         click(guestCount());
         for (int k = 0; k < rooms; k++) {
-            if (adults == 1) click(minusAdultButton());
-            for (int i = 0; i < adults - 2; i++) click(plusAdultButton());
-            for (int j = 0; j < children; j++) click(plusChildButton());
+            int existingAdultCount = Integer.parseInt(getText(adultCount()));
+            for (int i = 0; i < adults - existingAdultCount; i++) click(plusAdultButton());
+            int existingChildCount = Integer.parseInt(getText(childCount()));
+            for (int j = 0; j < children - existingChildCount; j++) click(plusChildButton());
             if (k != rooms - 1) click(addRoomButton());
         }
         click(guestDoneButton());
@@ -110,6 +123,10 @@ public class HotelSearchPage extends BasePage {
 
     public void clickOnSearchButton() {
         click(searchButton());
+    }
+
+    public void clickOnBusinessTypeTrip() {
+        click(businessTypeTrip());
     }
 
 
