@@ -10,7 +10,8 @@ import org.testng.asserts.SoftAssert;
 public class CustomSoftAssert extends SoftAssert {
 
 
-    AndroidDriver driver;
+    private AndroidDriver driver;
+    private DriverInitialiser driverInitialiser = new DriverInitialiser();
 
     public CustomSoftAssert(AndroidDriver driver) {
         this.driver = driver;
@@ -26,5 +27,6 @@ public class CustomSoftAssert extends SoftAssert {
     @Step("Test Case Failed")
     public void onAssertFailure(IAssert<?> iAssert, AssertionError assertionError) {
         Reporter.log("<p><font size=\"3\" color=\"red\">--Failed\"</font></p>", true);
+        driverInitialiser.captureScreenShot(driver);
     }
 }

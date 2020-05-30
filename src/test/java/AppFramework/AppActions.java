@@ -1,36 +1,28 @@
 package AppFramework;
 
 
-import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidKeyCode;
-import io.appium.java_client.android.AndroidTouchAction;
-import io.appium.java_client.touch.LongPressOptions;
 import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
 import io.qameta.allure.Step;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class AppActions {
 
     protected AndroidDriver driver;
 
-    static int DefaultTime = 60;
+    private static int DefaultTime = 60;
 
     protected void EnterValue(Locator locator, String value) {
         WebDriverWait webdriverWait = new WebDriverWait(driver, 60);
@@ -42,7 +34,7 @@ public class AppActions {
         }
         try {
             driver.hideKeyboard();
-        } catch (WebDriverException e) {
+        } catch (WebDriverException ignored) {
         }
 
         allureReportAndTestNgReport("Entered value  '" + value + "' in '" + locator.getName() + "'");
@@ -101,11 +93,6 @@ public class AppActions {
         return Text;
     }
 
-    protected void switchToNativeApp() {
-        driver.context("NATIVE_APP");
-        allureReportAndTestNgReport("Context switched to " + "NATIVE_APP");
-    }
-
     protected boolean waitUntilDisplayed(Locator locator, int Timeout) {
         WebDriverWait webdriverWait = new WebDriverWait(driver, Timeout);
         driver.manage().timeouts().implicitlyWait(Timeout, TimeUnit.SECONDS);
@@ -127,11 +114,11 @@ public class AppActions {
         }
     }
 
-    public int getHeightOfWindow() {
+    protected int getHeightOfWindow() {
         return driver.manage().window().getSize().getHeight();
     }
 
-    public void bringElementIntoViewDown(Locator locator, int ScrollCount) {
+    protected void bringElementIntoViewDown(Locator locator, int ScrollCount) {
         waitFor(2000);
         Dimension dimensions = driver.manage().window().getSize();
 
@@ -160,7 +147,7 @@ public class AppActions {
             allureReportAndTestNgReport("Scrolled " + locator.getName() + " into view");
     }
 
-    protected List<WebElement> getWebElements(Locator locator) {
+    protected List getWebElements(Locator locator) {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         try {
@@ -169,26 +156,12 @@ public class AppActions {
             //allureReportAndTestNgReport("List Of Element Not Displayed With " + locator.getName() + "");
         }
 
-        List<WebElement> webElementList = driver.findElements(locator.getBy());
-        if (!webElementList.isEmpty()) {
-            //allureReportAndTestNgReport("Viewed all list of " + locator.getName() + " and its size is " + webElementList.size());
-        } else {
+        List webElementList = driver.findElements(locator.getBy());
+        if (webElementList.isEmpty()) {
             allureReportAndTestNgReport("Unable to view list of " + locator.getName() + "");
         }
         driver.manage().timeouts().implicitlyWait(DefaultTime, TimeUnit.SECONDS);
         return webElementList;
-    }
-
-    protected void ClearValue(Locator locator) {
-        try {
-            WebDriverWait webdriverWait = new WebDriverWait(driver, 60);
-            webdriverWait.until(ExpectedConditions.elementToBeClickable(locator.getBy()));
-            driver.findElement(locator.getBy()).clear();
-            allureReportAndTestNgReport("Cleared value from '" + locator.getName() + "'");
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
     }
 
     protected WebElement convertToWebElement(Locator locator) {
@@ -217,7 +190,7 @@ public class AppActions {
                     return false;
                 }
             }
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException ignored) {
 
         } finally {
             driver.manage().timeouts().implicitlyWait(DefaultTime, TimeUnit.SECONDS);
@@ -226,16 +199,7 @@ public class AppActions {
     }
 
 
-
-    protected void clickOnSpecifiedCordinates(int x, int y) {
-        TouchAction touchAction = new TouchAction(driver);
-        touchAction.tap(PointOption.point(x, y)).release().perform();
-        allureReportAndTestNgReport("Clicked on " + x + " and " + y);
-    }
-
-
-
-    public void waitFor(int timeout) {
+    protected void waitFor(int timeout) {
         try {
             Thread.sleep(timeout);
         } catch (InterruptedException e) {
