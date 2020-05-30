@@ -12,23 +12,23 @@ public class LoginPage extends BasePage {
 
     /******************************************************************* Locators ****************************************************************/
 
-    Locator emailTextBox() {
+    private Locator emailTextBox() {
         return new Locator(By.xpath("//android.widget.EditText[@text='Enter Mobile No./Email']"), "E-Mail Text Box");
     }
 
-    Locator continueButton() {
+    private Locator continueButton() {
         return new Locator(By.id("btn_submit"), "Continue Button");
     }
 
-    Locator submitButton() {
+    private Locator submitButton() {
         return new Locator(By.id("btn_continue"), "Submit Button");
     }
 
-    Locator loginWithPasswordButton() {
+    private Locator loginWithPasswordButton() {
         return new Locator(By.id("pwd_option"), "Login With Password Button");
     }
 
-    Locator passwrodBox() {
+    private Locator passwrodBox() {
         return new Locator(By.xpath("//android.widget.EditText[@text='Enter Password']"), "Password Text Box");
     }
 

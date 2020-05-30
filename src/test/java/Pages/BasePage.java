@@ -1,15 +1,19 @@
 package Pages;
 
 import AppFramework.AppActions;
+import AppFramework.Locator;
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.By;
 
-public class BasePage extends AppActions {
+class BasePage extends AppActions {
 
-    public BasePage(AndroidDriver driver) {
+    BasePage(AndroidDriver driver) {
         this.driver = driver;
     }
 
-    /************************************************************************** Locators *******************************************************************************/
-
     /************************************************************************** Methods ********************************************************************************/
+
+    void swipeDown() {
+        bringElementIntoViewDown(new Locator(By.id("dummy"), ""), 1);
+    }
 }

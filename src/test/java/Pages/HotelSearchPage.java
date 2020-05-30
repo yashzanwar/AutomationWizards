@@ -11,70 +11,70 @@ public class HotelSearchPage extends BasePage {
 
     /******************************************************************* Locators ****************************************************************/
 
-    Locator cityText() {
+    private Locator cityText() {
         return new Locator(By.id("city"), "City Text");
     }
 
-    Locator searchBar() {
+    private Locator searchBar() {
         return new Locator(By.xpath("//android.widget.EditText[@text='Enter City/Area/Hotel Name']"), "Search bar");
     }
 
-    Locator searchResult() {
+    private Locator searchResult() {
         return new Locator(By.xpath("//*[contains(@resource-id,'rv_autosearch_locus')]/android.widget.RelativeLayout"), "Search Result");
     }
 
-    Locator checkInText() {
-        return new Locator(By.id("checkin"), "Check - In Text");
+    private Locator checkInDate() {
+        return new Locator(By.id("checkInDate"), "Check-In Date");
     }
 
-    Locator checkOutText() {
-        return new Locator(By.id("checkout_header"), "Check - Out Header");
+    private Locator checkInMonthYear() {
+        return new Locator(By.id("checkInMonthYear"), "Check-In Month");
     }
 
-    Locator doneButton() {
+    private Locator checkOutDate() {
+        return new Locator(By.id("checkOutDate"), "Check-Out Date");
+    }
+
+    private Locator checkOutMonthYear() {
+        return new Locator(By.id("checkOutMonthYear"), "Check-Out Month");
+    }
+
+    private Locator doneButton() {
         return new Locator(By.id("rlDone"), "Done Button");
     }
 
-    Locator guestsText() {
-        return new Locator(By.id("adult_count_header"), "Guests Header");
+    private Locator guestCount() {
+        return new Locator(By.id("guest_count"), "Guests Count");
     }
 
-    Locator roomsText() {
-        return new Locator(By.id("room_count_header"), "Rooms Header");
-    }
-
-    Locator minusAdultButton() {
+    private Locator minusAdultButton() {
         return new Locator(By.id("ivadultsubtract"), "Minus Adult Button");
     }
 
-    Locator plusAdultButton() {
+    private Locator plusAdultButton() {
         return new Locator(By.id("ivadultadd"), "Plus Adult Button");
     }
 
-    Locator minusChildButton() {
-        return new Locator(By.id("ivchildsubtract"), "Minus Child Button");
-    }
-
-    Locator plusChildButton() {
+    private Locator plusChildButton() {
         return new Locator(By.id("ivchildadd"), "PLus Child Button");
     }
 
-    Locator guestDoneButton() {
+    private Locator guestDoneButton() {
         return new Locator(By.id("btn_done"), "Done Button");
     }
 
-    Locator addRoomButton() {
+    private Locator addRoomButton() {
         return new Locator(By.id("btn_add_room"), "Add Room Button");
     }
 
-    Locator searchButton() {
+    private Locator searchButton() {
         return new Locator(By.id("search_button"), "Search Button");
     }
 
 
     /***************************************************************** Methods *******************************************************************/
 
-    public void clickOnCity() {
+    private void clickOnCity() {
         click(cityText());
     }
 
@@ -84,25 +84,28 @@ public class HotelSearchPage extends BasePage {
         click(searchResult());
     }
 
-    public void clickOnCheckIn() {
-        click(checkInText());
+    public String clickOnCheckIn() {
+        click(checkInDate());
         click(doneButton());
+        return getText(checkInDate()) + " " + getText(checkInMonthYear());
     }
 
-    public void clickOnCheckOut() {
-        click(checkOutText());
+    public String clickOnCheckOut() {
+        click(checkOutDate());
         click(doneButton());
+        return getText(checkOutDate()) + " " + getText(checkOutMonthYear());
     }
 
-    public void enterAdultsAndChildrenCountInEachRoom(int adults, int children, int rooms) {
-        click(guestsText());
+    public String enterAdultsAndChildrenCountInEachRoom(int adults, int children, int rooms) {
+        click(guestCount());
         for (int k = 0; k < rooms; k++) {
             if (adults == 1) click(minusAdultButton());
             for (int i = 0; i < adults - 2; i++) click(plusAdultButton());
-            for (int j = 0; j < children; j++) plusChildButton();
+            for (int j = 0; j < children; j++) click(plusChildButton());
             if (k != rooms - 1) click(addRoomButton());
         }
         click(guestDoneButton());
+        return getText(guestCount());
     }
 
     public void clickOnSearchButton() {

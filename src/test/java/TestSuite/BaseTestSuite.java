@@ -13,7 +13,7 @@ public class BaseTestSuite {
 
     private AppiumDriverLocalService appiumServices;
     protected AndroidDriver driver;
-    protected CustomSoftAssert customSoftAssert;
+    CustomSoftAssert customSoftAssert;
     private DriverInitialiser driverInitialiser = new DriverInitialiser();
 
     @BeforeMethod
@@ -22,15 +22,16 @@ public class BaseTestSuite {
         System.out.println("Device NAME **************** " + device);
         appiumServices = driverInitialiser.getAppiumDriverLocalService();
         driver = driverInitialiser.getAndroidDriver(appiumServices, device);
+        customSoftAssert = new CustomSoftAssert(driver);
     }
 
     @AfterMethod
     protected void onTestFinished(ITestResult testResult) {
+        customSoftAssert.assertAll();
         if (testResult != null && testResult.getStatus() == ITestResult.FAILURE) {
             driverInitialiser.captureScreenShot(driver);
             Reporter.log(testResult.getThrowable().toString(), true);
         }
-
         if (driver != null) driver.quit();
         if (appiumServices != null) appiumServices.stop();
     }

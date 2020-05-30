@@ -232,7 +232,8 @@ public class AppActions {
                 break;
             }
         }
-        allureReportAndTestNgReport("Scrolled " + locator.getName() + " into view");
+        if (!locator.getName().equals(""))
+            allureReportAndTestNgReport("Scrolled " + locator.getName() + " into view");
     }
 
     public void bringElementIntoViewUp(Locator locator, int ScrollCount) {
@@ -307,12 +308,12 @@ public class AppActions {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator.getBy()));
         } catch (Exception e) {
-            allureReportAndTestNgReport("List Of Element Not Displayed With " + locator.getName() + "");
+            //allureReportAndTestNgReport("List Of Element Not Displayed With " + locator.getName() + "");
         }
 
         List<WebElement> webElementList = driver.findElements(locator.getBy());
         if (!webElementList.isEmpty()) {
-            allureReportAndTestNgReport("Viewed all list of " + locator.getName() + " and its size is " + webElementList.size());
+            //allureReportAndTestNgReport("Viewed all list of " + locator.getName() + " and its size is " + webElementList.size());
         } else {
             allureReportAndTestNgReport("Unable to view list of " + locator.getName() + "");
         }

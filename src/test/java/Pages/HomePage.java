@@ -14,7 +14,7 @@ public class HomePage extends BasePage {
 
     /******************************************************************* Locators ****************************************************************/
 
-    Locator hotelsTab(String tabs) {
+    private Locator hotelsTab(String tabs) {
         return new Locator(By.xpath("//*[@text='"+tabs+"'][contains(@resource-id,'title')]"), tabs + " Title");
     }
 
