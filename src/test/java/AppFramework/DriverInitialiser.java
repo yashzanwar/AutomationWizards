@@ -48,6 +48,7 @@ public class DriverInitialiser {
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, String.valueOf(true));
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, appPackage);
         desiredCapabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, appActivity);
+        desiredCapabilities.setCapability("headspin:capture.video", true);
         AndroidDriver driver = new AndroidDriver<>(new URL(appiumUrl), desiredCapabilities);
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         return driver;
