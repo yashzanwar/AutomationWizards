@@ -40,15 +40,14 @@ public class LoginPage extends BasePage {
         return new Locator(By.id("skip"), "Skip Button");
     }
 
+    private Locator signInWithGmail() {
+        return new Locator(By.xpath("//*[contains(@resource-id,'credential_picker_options')]//*[contains(@resource-id,'credential_primary_label')]"), "Email Login");
+    }
+
     /***************************************************************** Methods *****************************************************************/
 
-    public void doLogin(String emailId, String password) {
-        if (waitUntilDisplayed(cancelButton(), 15)) click(cancelButton());
-//        EnterValue(emailTextBox(), emailId);
-//        click(continueButton());
-//        click(loginWithPasswordButton());
-//        EnterValue(passwrodBox(), password);
-//        click(submitButton());
-        click(skipButton());
+    public void doLogin() {
+        if (waitUntilDisplayed(cancelButton(), 15)) click(signInWithGmail());
+        else click(skipButton());
     }
 }

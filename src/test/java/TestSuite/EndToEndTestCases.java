@@ -36,7 +36,7 @@ public class EndToEndTestCases extends BaseTestSuite {
     public void Test_End_To_End_Flow() throws IOException {
         loadTestData();
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.doLogin(emailId, password);
+        loginPage.doLogin();
         HomePage homePage = new HomePage(driver);
         homePage.clickOnRespectiveTab(hotelCategory);
         HotelSearchPage hotelSearchPage = new HotelSearchPage(driver);
