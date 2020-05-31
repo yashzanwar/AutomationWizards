@@ -4,6 +4,7 @@ package AppFramework;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -52,6 +53,7 @@ public class DriverInitialiser {
         return driver;
     }
 
+    @Attachment(value = "Page Screenshot", type = "image/png")
     public byte[] captureScreenShot(WebDriver browser) {
         return ((TakesScreenshot) browser).getScreenshotAs(OutputType.BYTES);
     }
