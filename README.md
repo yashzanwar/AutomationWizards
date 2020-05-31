@@ -3,7 +3,7 @@ An automation hackhathon to automate end to end flow of Makemytrip App using App
 
 ## Pre Assuming The Conditions:
 1. The Playstore version App of Makemytrip is already installed on the device.
-2. MAVEN_PATH and JAVA_HOME needs to be set up.
+2. `MAVEN_PATH` and `JAVA_HOME` needs to be set up.
 
 ## Steps To Run the test cases:
 1. **Clone The project** - `https://github.com/yashzanwar/AutomationWizards.git`
